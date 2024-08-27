@@ -35,6 +35,7 @@ import org.matsim.vis.otfvis.OTFVisConfigGroup;
 public class RunTaxiExample {
 	public static final String CONFIG_FILE_RULEBASED = "scenarios/mielec_2014_02/mielec_taxi_config_rulebased.xml";
 	public static final String CONFIG_FILE_ASSIGNMENT = "scenarios/mielec_2014_02/mielec_taxi_config_assignment.xml";
+	public static final String CONFIG_FILE_SMARTSIM = "scenarios/SmartSim_Comparison/SmartSim_comparison_experiment.xml";
 
 	public static void run(String configFile, boolean otfvis, int lastIteration) {
 		// load config
@@ -47,6 +48,6 @@ public class RunTaxiExample {
 
 	public static void main(String[] args) {
 		//RunTaxiExample.run(CONFIG_FILE_RULEBASED,false, 0); // switch to 'true' to turn on visualisation
-		RunTaxiExample.run(CONFIG_FILE_ASSIGNMENT, false, 0); // switch to 'true' to turn on visualisation
+		RunTaxiExample.run(CONFIG_FILE_SMARTSIM, false, 0); // switch to 'true' to turn on visualisation
 	}
 }
