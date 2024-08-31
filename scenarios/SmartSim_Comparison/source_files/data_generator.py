@@ -28,7 +28,7 @@ def write_vehicles_to_xml(vehicles, output_file):
         file.write(pretty_xml_content)
 
 
-def generate_passengers(link_ids, num_passengers=30000, day_seconds=86400):
+def generate_passengers_taxi(link_ids, num_passengers=30000, day_seconds=86400):
     population = ET.Element('population')
 
     for i in range(1, num_passengers + 1):
@@ -60,6 +60,38 @@ def generate_passengers(link_ids, num_passengers=30000, day_seconds=86400):
     return population
 
 
+def generate_passengers_private(link_ids, num_passengers=30000, day_seconds=86400):
+    population = ET.Element('population')
+
+    for i in range(1, num_passengers + 1):
+        person = ET.SubElement(population, 'person')
+        person.set('id', f'{i:07d}')
+
+        plan = ET.SubElement(person, 'plan')
+        plan.set('selected', 'yes')
+
+        start_link = random.choice(link_ids)
+        end_link = random.choice(link_ids)
+
+        # Calculate evenly distributed end_time
+        end_time_seconds = ((i - 1) * day_seconds) // num_passengers
+        end_time = str(timedelta(seconds=end_time_seconds))
+
+        act1 = ET.SubElement(plan, 'act')
+        act1.set('type', 'h')
+        act1.set('link', start_link)
+        act1.set('end_time', end_time)
+
+        leg = ET.SubElement(plan, 'leg')
+        leg.set('mode', 'car')
+
+        act2 = ET.SubElement(plan, 'act')
+        act2.set('type', 'w')
+        act2.set('link', end_link)
+
+    return population
+
+
 def write_population_to_xml(population, output_file):
     xml_declaration = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE population SYSTEM "http://www.matsim.org/files/dtd/population_v5.dtd">\n'
     rough_string = ET.tostring(population, 'utf-8')
@@ -86,7 +118,7 @@ def taxi_generator():
     print(f"Taxis have been written to {output_file}.")
 
 
-def passenger_generator():
+def passenger_generator_taxi():
     passenger_num = 30000
 
     link_file = 'link_ids.csv'
@@ -95,12 +127,28 @@ def passenger_generator():
     with open(link_file, 'r') as file:
         link_ids = [line.strip() for line in file.readlines()][1:]
 
-    population = generate_passengers(link_ids)
+    population = generate_passengers_taxi(link_ids)
+    write_population_to_xml(population, output_file)
+
+    print(f"Passengers have been written to {output_file}.")
+
+
+def passenger_generator_private():
+    passenger_num = 30000
+
+    link_file = 'link_ids.csv'
+    output_file = f'passengers-{passenger_num}-private.xml'
+
+    with open(link_file, 'r') as file:
+        link_ids = [line.strip() for line in file.readlines()][1:]
+
+    population = generate_passengers_private(link_ids)
     write_population_to_xml(population, output_file)
 
     print(f"Passengers have been written to {output_file}.")
 
 
 if __name__ == '__main__':
-    taxi_generator()
-    # passenger_generator()
+    # taxi_generator()
+    # passenger_generator_taxi()
+    passenger_generator_private()
