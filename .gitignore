@@ -22,3 +22,5 @@ hs_err_pid*
 /matsim-maas-master-SNAPSHOT.jar
 
 .DS_Store
+cache
+
