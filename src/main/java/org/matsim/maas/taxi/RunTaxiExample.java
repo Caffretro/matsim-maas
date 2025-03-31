@@ -47,7 +47,7 @@ public class RunTaxiExample {
 	}
 
 	public static void main(String[] args) {
-		//RunTaxiExample.run(CONFIG_FILE_RULEBASED,false, 0); // switch to 'true' to turn on visualisation
+//		RunTaxiExample.run(CONFIG_FILE_RULEBASED,false, 0); // switch to 'true' to turn on visualisation
 		RunTaxiExample.run(CONFIG_FILE_SMARTSIM, false, 0); // switch to 'true' to turn on visualisation
 	}
 }

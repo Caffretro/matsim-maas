@@ -104,7 +104,7 @@ def write_population_to_xml(population, output_file):
 
 
 def taxi_generator():
-    taxi_num = 1000
+    taxi_num = 1800
 
     link_file = 'link_ids.csv'
     output_file = f'taxis-{taxi_num}.xml'
@@ -149,6 +149,6 @@ def passenger_generator_private():
 
 
 if __name__ == '__main__':
-    # taxi_generator()
+    taxi_generator()
     # passenger_generator_taxi()
-    passenger_generator_private()
+    # passenger_generator_private()
